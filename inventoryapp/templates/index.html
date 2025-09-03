@@ -1,5 +1,37 @@
 {% extends "layout.html" %}
 {% block title %}Inventory App{% endblock %}
 {% block content %}
-<h1>My app</h1>
+<h1>Welcome to Inventory App Home page!</h1>
+<h3>Categories</h3>
+
+
+<table class="table-auto" border=1>
+    <thead>
+      <tr>
+        <th>image</th>
+        <th>id</th>
+        <th>name</th>
+        <th>created_at</th>
+        <th>updated_at</th> 
+
+      </tr>
+    </thead>
+
+    <tbody>
+{% for category in categories  %}
+
+      <tr>
+        <td>
+        <img src="/media/{{category.image}}" style="width: 100px; height: 100px;" alt="">
+        </td>
+        <td>{{category.id}}</td>
+        <td>{{category.name}}</td>
+        <td>{{category.created_at}}</td>
+        <td>{{category.updated_at}}</td>
+      </tr>
+{% endfor %}
+
+    </tbody>
+  </table>
+
 {% endblock %}
