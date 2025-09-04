@@ -29,11 +29,11 @@ class Sellers(models.Model):
 
 class Products(models.Model):
     id = models.IntegerField(primary_key=True)
+    image = models.ImageField(upload_to='product_images/', default='photos/rice.png')
     name = models.CharField(max_length=30)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=False) 
     weight = models.DecimalField(max_digits=10, decimal_places=2, null=False)
     expiry_date = models.DateTimeField()
-    image = models.ImageField(upload_to='product_images/', default='photos/rice.png')
     quantity_in_stock = models.IntegerField(default=0, null=False)
     created_at = models.DateTimeField( default=timezone.now)
     updated_at = models.DateTimeField( default=timezone.now)

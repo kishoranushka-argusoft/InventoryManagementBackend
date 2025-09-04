@@ -2,5 +2,42 @@
 {% block title %}Products{% endblock %}
 {% block content %}
 <h2>Products</h2>
+<table border=1 >
+    <thead>
+        <tr >
+            <td>Id</td>
+            <td>Image</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Weight</td>
+            <td>Expiry_date</td>
+            <td>Quantity_in_stock</td>
+            <td>Category</td>
+            <td>Seller</td>
+        </tr>
+    </thead>
+    <tbody>
+{% for product in all_products  %}
+<tr>
+    <td>{{product.id}}</td>
+    <td> <img
+        src="{{product.image.url}}"
+        style="width: 100px; height: 100px"
+        alt=""
+      /></td>
+    <td>{{product.name}}</td>
+    <td>{{product.price}}</td>
+    <td>{{product.weight}}</td>
+    <td>{{product.expiry_date}}</td>
+    <td>{{product.quantity_in_stock}}</td>
+    <td>{{product.category}}</td>
+    <td>{{product.seller}}</td>
+    
 
+</tr>
+{% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url "home"%}"><button>Return to dashboard</button></a>
 {% endblock %}

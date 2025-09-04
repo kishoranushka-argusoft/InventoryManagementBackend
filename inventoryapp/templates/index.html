@@ -2,17 +2,24 @@
 {% block title %}Inventory App{% endblock %}
 {% block content %}
 <h1>Welcome to Inventory App Home page!</h1>
+<button><a href="{% url 'add_category'%}">Add category</a></button>
+<button><a href="{% url 'add_product'%}">Add Product</a></button>
+<button><a href="{% url 'categories'%}">View Categories</a></button>
+<button><a href="{% url 'products'%}">View Products</a></button>
+<button>View Sellers</button>
 <h3>Categories</h3>
 
 
 <table class="table-auto" border=1>
     <thead>
       <tr>
-        <th>image</th>
         <th>id</th>
+        <th>image</th>
         <th>name</th>
         <th>created_at</th>
         <th>updated_at</th> 
+        <th>Edit</th>
+        <th>Delete</th>
 
       </tr>
     </thead>
@@ -21,17 +28,63 @@
 {% for category in categories  %}
 
       <tr>
+        <td>{{category.id}}</td>
         <td>
         <img src="/media/{{category.image}}" style="width: 100px; height: 100px;" alt="">
         </td>
-        <td>{{category.id}}</td>
         <td>{{category.name}}</td>
         <td>{{category.created_at}}</td>
         <td>{{category.updated_at}}</td>
+        <td><a href="{% url 'category_edit' category.id%}"><button>Edit</button></a></td>
+        <td><a href="{% url 'category_delete' category.id%}"><button>Delete</button></a></td>
       </tr>
 {% endfor %}
 
     </tbody>
   </table>
+
+
+  <h2>Products</h2>
+<table border=1 >
+    <thead>
+        <tr >
+            <td>Id</td>
+            <td>Image</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Weight</td>
+            <td>Expiry_date</td>
+            <td>Quantity_in_stock</td>
+            <td>Category</td>
+            <td>Seller</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+    </thead>
+    <tbody>
+{% for product in all_products  %}
+<tr>
+    <td>{{product.id}}</td>
+    <td> <img
+        src="{{product.image.url}}"
+        style="width: 100px; height: 100px"
+        alt=""
+      /></td>
+    <td>{{product.name}}</td>
+    <td>{{product.price}}</td>
+    <td>{{product.weight}}</td>
+    <td>{{product.expiry_date}}</td>
+    <td>{{product.quantity_in_stock}}</td>
+    <td>{{product.category}}</td>
+    <td>{{product.seller}}</td>
+    <td><a href="{% url 'product_edit' product.id%}"><button>Edit</button></a></td>
+    <td><a href="{% url 'product_delete' product.id%}"><button>Delete</button></a></td>
+    
+
+</tr>
+{% endfor %}
+    </tbody>
+</table>
+
 
 {% endblock %}
