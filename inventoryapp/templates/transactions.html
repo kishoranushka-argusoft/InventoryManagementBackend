@@ -2,5 +2,42 @@
 {% block title %}Transactions{% endblock %}
 {% block content %}
 <h2>Transactions</h2>
+{% comment %} <button><a href="{% url 'sell'%}">Sell</a></button>
+<button><a href="{% url 'sell_return'%}">Return</a></button>
+<button><a href="{% url 'add_product'%}">Add Stock</a></button>
 
+<table border=1>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>product</th>
+            <th>transaction_type</th>
+            <th>quantity</th>
+            <th>price_per_unit</th>
+            <th>total_price</th>
+            <th>transaction_date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{transaction.id}}</td>
+            <td>{{transaction.product}}</td>
+            <td>{{transaction.transaction_type}}</td>
+            <td>{{transaction.quantity}}</td>
+            <td>{{transaction.price_per_unit}}</td>
+            <td>{{transaction.total_price}}</td>
+            <td>{{transaction.transaction_date}}</td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> {% endcomment %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type='submit'>Submit</button>
+
+</form>
+<a href="{% url "home"%}"><button>Return to dashboard</button></a>
 {% endblock %}

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'inventoryapp',
+    'django_select2'
 ]
 
 MIDDLEWARE = [
@@ -80,7 +81,7 @@ DATABASES = {
 #     }
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'inventorymanagementdb',  # Replace with your database name
+            'NAME': 'Inventorymanagementdb',  # Replace with your database name
             'USER': 'postgres',      # Replace with your PostgreSQL username
             'PASSWORD': 'argusadmin',  # Replace with your PostgreSQL password
             'HOST': 'localhost',          # Or the IP/hostname of your PostgreSQL server

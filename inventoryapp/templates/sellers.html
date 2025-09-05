@@ -2,5 +2,25 @@
 {% block title %}Sellers{% endblock %}
 {% block content %}
 <h2>Sellers</h2>
-
+<table border=1>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>email</th>
+            <th>phone.no.</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for seller in sellers %}
+        <tr>
+            <td>{{seller.id}}</td>
+            <td>{{seller.name}}</td>
+            <td>{{seller.email}}</td>
+            <td>{{seller.phone}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url "home"%}"><button>Return to dashboard</button></a>
 {% endblock %}

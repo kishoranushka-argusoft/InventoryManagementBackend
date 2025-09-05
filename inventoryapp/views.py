@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Products, Category
-from .forms import AddCategoryForm, AddProductForm
+from .models import Products, Category, Sellers, Transactions
+from .forms import AddCategoryForm, AddProductForm, TransactionForm
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -18,6 +19,7 @@ def add_product(request):
         form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save(commit= False)
+            # product.category = form.cleaned_data['category']
             product.save()
             return redirect('add_product')
         
@@ -92,7 +94,53 @@ def category_delete(request, category_id):
     return render(request, 'confirm_delete.html', {"category":category})
 
 def sellers(request):
-    return render(request, "sellers.html")
+    sellers = Sellers.objects.all()
+    return render(request, "sellers.html", {"sellers":sellers})
 
-def transactions(request):
-    return render(request, "transactions.html")
+def transactions_view(request):
+    if request.method == "POST":
+        form = TransactionForm(request.POST, request.FILES)
+        print("🐍 File: inventoryapp/views.py | Line: 105 | transactions ~ form",form)
+        transactions = form.save(commit=False)
+        
+        if form.is_valid():
+            print("----------------------------------", transactions)
+            product = transactions.product
+            print("++++++++++++++++++++++++",product)
+            transactions.price_per_unit = product.price
+            print("^^^^^^^^^^^^^^^^^^^^^^^^^", transactions.price_per_unit)
+            transactions.total_price = transactions.quantity* transactions.price_per_unit
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$$$", transactions.total_price)
+
+            if transactions.transactions_type == 'sale':
+                if product.quantity_in_stock >= transactions.quantity:
+                    product.quantity_in_stock -= transactions.quantity
+                    product = form.save(commit=False)
+                    product.save()
+                    transactions = form.save(commit=False)
+                    transactions.save()
+                    messages.success(request, "sell done successfully")
+
+                else:
+                    messages.error(request,"Not enough stock available!")
+
+            elif transactions.transactions_type =='Return':
+                product.quantity_in_stock += transactions.quantity
+                product = form.save(commit=False)
+                product.save()
+                transactions = form.save(commit=False)
+                transactions.save()
+                messages.success(request, "return stock added successfully")
+                return redirect ('transactions_view')
+
+    else:
+        form = TransactionForm()
+    return render(request, "transactions.html", {'form':form})
+    
+    
+
+def sell(request):
+    return render(request, 'sell.html')
+
+def sell_return(request):
+    return render(request, 'sell_return.html')
